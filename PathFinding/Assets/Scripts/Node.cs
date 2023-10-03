@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node
+public class NodeClass
 {
-    public Vector2 NodePos;
+    public Vector2 NodeGridPos;
     public Vector3 NodeWorldPos;
 
-    public Node(Vector2 nodePos, Vector3 nodeWorldPos)
+    public NodeClass(Vector2 nodePos, Vector3 nodeWorldPos)
     {
-        NodePos = nodePos;
+        NodeGridPos = nodePos;
         NodeWorldPos = nodeWorldPos;
     }
 }
