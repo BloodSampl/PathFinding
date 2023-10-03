@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Node
 {
-    int hCost;
-    int gCost;
-    int fCost;
+    public Vector2 NodePos;
+    public Vector3 NodeWorldPos;
+
+    public Node(Vector2 nodePos, Vector3 nodeWorldPos)
+    {
+        NodePos = nodePos;
+        NodeWorldPos = nodeWorldPos;
+    }
 }
