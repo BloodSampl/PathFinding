@@ -1,17 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PathFindingGrid : MonoBehaviour
 {
-    [SerializeField] int width;
-    [SerializeField] int height;
-    [SerializeField] List<NodeClass> grid = new List<NodeClass>();
-    [SerializeField] GameObject prefab;
+    public int width;
+    public int height;
+    [SerializeField] List<Node> nodes = new List<Node>();
+    public GameObject prefab;
 
     private void Start()
     {
-        GenerateGrid(); 
+        GenerateGrid();
+    }
+    public Node GetNode(Vector2Int gridPosition)
+    {
+        int index = gridPosition.x + gridPosition.y * width;
+        return nodes[index];
     }
 
     private void GenerateGrid()
@@ -21,12 +27,12 @@ public class PathFindingGrid : MonoBehaviour
             for(int x = 0; x < width; x++)
             {
                 Vector2Int pos = new Vector2Int(x, z);
-                NodeClass newNode = new NodeClass(pos,new Vector3(pos.x,0 ,pos.y));
+                Node newNode = new Node(pos,new Vector3(pos.x,0 ,pos.y));
                 GameObject nodPrefab = Instantiate(prefab, new Vector3(pos.x ,0, pos.y), Quaternion.identity);
                 nodPrefab.transform.parent = transform;
                 nodPrefab.name = pos.ToString();
-                grid.Add(newNode);
-                Debug.Log(grid.Count);
+                nodes.Add(newNode);
+                Debug.Log(nodes.Count);
                 Debug.Log(Mathf.RoundToInt(newNode.NodeGridPos.x) + "," + Mathf.RoundToInt(newNode.NodeGridPos.y));
                 
             }
