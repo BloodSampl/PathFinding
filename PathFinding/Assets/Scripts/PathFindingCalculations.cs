@@ -9,13 +9,20 @@ public class PathFindingCalculations : MonoBehaviour
     [SerializeField] Vector2Int endNode;
     Material nodRendererMaterial;
     List<Node> openNodes = new List<Node>();
-    void AddingNeighbors()
+
+    private void Start()
+    {
+        grid.GenerateGrid();
+        AddingNeighbors();
+    }
+    public void AddingNeighbors()
     {
         Node startNode = grid.GetNode(startingNode);
 
         if(startNode.NodeGridPos.x < grid.width)
         {
-            openNodes.Add(grid.GetNode(startingNode + new Vector2Int(1, 0)));     
+            openNodes.Add(grid.GetNode(startingNode + new Vector2Int(1, 0)));
+            
         }
         if(startNode.NodeGridPos.x >= 0)
         {
@@ -28,6 +35,13 @@ public class PathFindingCalculations : MonoBehaviour
         if (startNode.NodeGridPos.x >= 0)
         {
             openNodes.Add(grid.GetNode(startingNode + new Vector2Int(-1, 0)));
+        }
+    }
+    void ChangingColorsForOpenNodes()
+    {
+        foreach(Node node in openNodes)
+        {
+            
         }
     }
 }
