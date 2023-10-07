@@ -5,10 +5,10 @@ using UnityEngine;
 public class Node
 {
     
-    public Vector2 NodeGridPos;
+    public Vector2Int NodeGridPos;
     public Vector3 NodeWorldPos;
 
-    public Node(Vector2 nodePos, Vector3 nodeWorldPos)
+    public Node(Vector2Int nodePos, Vector3 nodeWorldPos)
     {
         NodeGridPos = nodePos;
         NodeWorldPos = nodeWorldPos;
