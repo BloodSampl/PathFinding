@@ -24,30 +24,31 @@ public class PathFindingCalculations : MonoBehaviour
             Debug.Log(node.NodeGridPos);
         }
     }
-    void TheBigLoop()
-    {
-        while (true)
-        {
-            if(openNodes.Count <= 0)
-            
-                return false;
-
-            openList.Sort();
-
-            Node currentNode = openNodes[0];
-            for (int i = 0; i < openNodes.Count; i++)
-            {
-
-            }
-            
-        }
-    }
+    //void Astar()
+    //{
+    //    while (true)
+    //    {
+    //        if(openNodes.Count <= 0)
+    //        
+    //            return false;
+    //
+    //        openList.Sort();
+    //
+    //        Node currentNode = openNodes[0];
+    //        for (int i = 0; i < openNodes.Count; i++)
+    //        {
+    //
+    //        }
+    //        
+    //    }
+    //}
 
     
     
     public void AddingNeighbors()
     {
         Node startNode = grid.GetNode(startingNode);
+        openNodes.Add(startNode);
 
         if(startNode.NodeGridPos.x < grid.width-1)
         {
