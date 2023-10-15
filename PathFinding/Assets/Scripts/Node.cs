@@ -16,7 +16,7 @@ public class Node //: IComparable
     }
 
     public bool Walkble;
-    public Node ParantNode; 
+    public Node Parent; 
     public Vector2Int NodeGridPos;
     public Vector3 NodeWorldPos;
     public Node(Vector2Int nodePos, Vector3 nodeWorldPos)
@@ -24,6 +24,7 @@ public class Node //: IComparable
         NodeGridPos = nodePos;
         NodeWorldPos = nodeWorldPos;
     }
+
     //public int CompareTo(object obj)
     //{
     //    Node otherNode = (Node)obj;

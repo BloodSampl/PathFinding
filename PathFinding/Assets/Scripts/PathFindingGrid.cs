@@ -30,10 +30,6 @@ public class PathFindingGrid : MonoBehaviour
                 nodPrefab.transform.parent = transform;
                 nodPrefab.name = pos.ToString();
                 nodes.Add(newNode);
-               // Debug.Log(nodes.Count);
-                //Debug.Log(newNode.NodeGridPos);
-                //Renderer renderer = nodPrefab.GetComponentInChildren<Renderer>();
-                //renderer.material.color = Color.red;
             }
         }
     }

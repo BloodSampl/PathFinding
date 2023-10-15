@@ -6,7 +6,7 @@ public class PathFindingCalculations : MonoBehaviour
 {
     PathFindingGrid grid;
     [SerializeField] Vector2Int startingNode;
-    [SerializeField] Vector2Int goalNode;
+    [SerializeField] Vector2Int endNode;
     List<Node> openNodes = new List<Node>();
     List<Node> closedNodes = new List<Node>();
 
@@ -17,55 +17,92 @@ public class PathFindingCalculations : MonoBehaviour
     private void Start()
     {
         grid.GenerateGrid();
-        AddingNeighbors();
         ChangeColorsForOpenNodes(Color.green);
-        foreach (Node node in openNodes)
-        {
-            Debug.Log(node.NodeGridPos);
-        }
+        FindPath();
     }
-    //void Astar()
-    //{
-    //    while (true)
-    //    {
-    //        if(openNodes.Count <= 0)
-    //        
-    //            return false;
-    //
-    //        openList.Sort();
-    //
-    //        Node currentNode = openNodes[0];
-    //        for (int i = 0; i < openNodes.Count; i++)
-    //        {
-    //
-    //        }
-    //        
-    //    }
-    //}
-
-    
-    
-    public void AddingNeighbors()
+    void FindPath()
     {
         Node startNode = grid.GetNode(startingNode);
+        Node targetNode = grid.GetNode(endNode);
         openNodes.Add(startNode);
 
-        if(startNode.NodeGridPos.x < grid.width-1)
+        while (openNodes.Count > 0)
         {
-            openNodes.Add(grid.GetNode(startingNode + new Vector2Int(1, 0)));
+            Node currentNode = GetLowestFcostNode(openNodes);
+
+            if(currentNode == targetNode)
+            {
+                RetracePath(startNode, targetNode);
+                Debug.Log("Path Found");
+                return; 
+            }
+            openNodes.Remove(currentNode);
+            closedNodes.Add(currentNode);
+
+            foreach(Node neighbor in GetNeighbors(currentNode))
+            {
+                if(!neighbor.Walkble || closedNodes.Contains(neighbor))
+                {
+                    continue;
+                }
+
+                int newNeighborGcost = currentNode.Gcost + CalculateNodeCost(currentNode.NodeGridPos, neighbor.NodeGridPos);
+
+                if(newNeighborGcost < neighbor.Gcost || !openNodes.Contains(neighbor))
+                {
+                    neighbor.Gcost = newNeighborGcost;
+                    neighbor.Hcost = CalculateNodeCost(neighbor.NodeGridPos, endNode);
+                    neighbor.Parent = currentNode;
+
+                    if(!openNodes.Contains(neighbor))
+                    {
+                        openNodes.Add(neighbor);
+                    }
+                }
+
+            }
+
         }
-        if(startNode.NodeGridPos.x > 0)
+        Debug.Log("No Path was found");
+    }
+
+    Node GetLowestFcostNode(List<Node> nodes)
+    {
+        Node lowestFcostNode = nodes[0];
+        for(int i = 0; i < nodes.Count; i++)
         {
-            openNodes.Add(grid.GetNode(startingNode + new Vector2Int(-1, 0)));
+            if (nodes[i].Fcost < lowestFcostNode.Fcost)
+            {
+                lowestFcostNode = nodes[i];
+            }
         }
-        if (startNode.NodeGridPos.y < grid.height-1)
+        return lowestFcostNode;
+    }
+
+    
+    
+    List<Node> GetNeighbors(Node current)
+    {
+        List<Node> neighborNodes = new List<Node>();
+        neighborNodes.Add(current);
+
+        if(current.NodeGridPos.x < grid.width-1)
         {
-            openNodes.Add(grid.GetNode(startingNode + new Vector2Int(0, 1)));
+            neighborNodes.Add(grid.GetNode(startingNode + new Vector2Int(1, 0)));
         }
-        if (startNode.NodeGridPos.y > 0)
+        if(current.NodeGridPos.x > 0)
         {
-            openNodes.Add(grid.GetNode(startingNode + new Vector2Int(0, -1)));
+            neighborNodes.Add(grid.GetNode(startingNode + new Vector2Int(-1, 0)));
         }
+        if (current.NodeGridPos.y < grid.height-1)
+        {
+            neighborNodes.Add(grid.GetNode(startingNode + new Vector2Int(0, 1)));
+        }
+        if (current.NodeGridPos.y > 0)
+        {
+            neighborNodes.Add(grid.GetNode(startingNode + new Vector2Int(0, -1)));
+        }
+        return neighborNodes;
     }
 
     int CalculateNodeCost(Vector2Int nodOneVector, Vector2Int nodTwoVector)
@@ -81,6 +118,29 @@ public class PathFindingCalculations : MonoBehaviour
             Debug.Log(node.NodeGridPos);
             Renderer nodeRenderer = nodeObject.GetComponentInChildren<Renderer>();
             nodeRenderer.material.color = color;
+        }
+    }
+
+
+    void RetracePath(Node start, Node goal)
+    {
+        List<Node> path = new List<Node>();
+        Node currentNode = goal;
+
+        while (currentNode != start)
+        {
+            path.Add(currentNode);
+            currentNode = currentNode.Parent;
+        }
+        DisplayPath(path);
+    }
+    void DisplayPath(List<Node> path)
+    {
+        foreach(Node node in path)
+        {
+            GameObject nodeObject = GameObject.Find(node.NodeGridPos.ToString());
+            Renderer nodeRenderer = nodeObject.GetComponentInChildren<Renderer>();
+            nodeRenderer.material.color = Color.blue;
         }
     }
 }
