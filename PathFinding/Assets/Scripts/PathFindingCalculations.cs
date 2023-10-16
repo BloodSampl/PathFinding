@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEditor.Experimental.GraphView;
+
 
 public class PathFindingCalculations : MonoBehaviour
 {
     PathFindingGrid grid;
     [SerializeField] Vector2Int startingNode;
     [SerializeField] Vector2Int endNode;
+    TextMeshProUGUI lable;
     List<Node> openNodes = new List<Node>();
     List<Node> closedNodes = new List<Node>();
 
@@ -39,6 +43,7 @@ public class PathFindingCalculations : MonoBehaviour
             openNodes.Remove(currentNode);
             closedNodes.Add(currentNode);
 
+
             foreach(Node neighbor in GetNeighbors(currentNode))
             {
                 if(!neighbor.Walkble || closedNodes.Contains(neighbor))
@@ -51,6 +56,9 @@ public class PathFindingCalculations : MonoBehaviour
                 if(newNeighborGcost < neighbor.Gcost || !openNodes.Contains(neighbor))
                 {
                     neighbor.Gcost = newNeighborGcost;
+                    neighbor.go = GameObject.Find(neighbor.NodeGridPos.ToString());
+                    neighbor.lable = nodeObject.
+                    neighbor.lable.text = neighbor.Gcost.ToString();
                     neighbor.Hcost = CalculateNodeCost(neighbor.NodeGridPos, endNode);
                     neighbor.Parent = currentNode;
 
@@ -84,7 +92,6 @@ public class PathFindingCalculations : MonoBehaviour
     List<Node> GetNeighbors(Node current)
     {
         List<Node> neighborNodes = new List<Node>();
-        neighborNodes.Add(current);
 
         if(current.NodeGridPos.x < grid.width-1)
         {

@@ -10,7 +10,7 @@ public class PathFindingGrid : MonoBehaviour
     public int height;
     [SerializeField] List<Node> nodes = new List<Node>();
     public GameObject prefab;
-    public GameObject nodPrefab;
+    GameObject nodPrefab;
 
     public Node GetNode(Vector2Int gridPosition)
     {
@@ -27,6 +27,7 @@ public class PathFindingGrid : MonoBehaviour
                 Vector2Int pos = new Vector2Int(x, z);
                 Node newNode = new Node(pos,new Vector3(pos.x,0 ,pos.y));
                 nodPrefab = Instantiate(prefab, new Vector3(pos.x ,0, pos.y), Quaternion.identity);
+                newNode.go = nodPrefab;
                 nodPrefab.transform.parent = transform;
                 nodPrefab.name = pos.ToString();
                 nodes.Add(newNode);
