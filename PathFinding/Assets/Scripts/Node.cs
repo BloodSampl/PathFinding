@@ -21,7 +21,7 @@ public class Node //: IComparable
 
     
 
-    public TextMeshProUGUI lable
+    public TextMeshProUGUI Lable
     {
         get
         {
@@ -29,13 +29,13 @@ public class Node //: IComparable
         }
         set
         {
-            lable = value;
+            Lable = value;
         }
     }
         
         
 
-    public bool Walkble;
+    public bool Walkble = true;
     public Node Parent; 
     public Vector2Int NodeGridPos;
     public Vector3 NodeWorldPos;

@@ -10,7 +10,7 @@ public class PathFindingCalculations : MonoBehaviour
     PathFindingGrid grid;
     [SerializeField] Vector2Int startingNode;
     [SerializeField] Vector2Int endNode;
-    TextMeshProUGUI lable;
+    TextMeshProUGUI []lable;
     List<Node> openNodes = new List<Node>();
     List<Node> closedNodes = new List<Node>();
 
@@ -56,10 +56,9 @@ public class PathFindingCalculations : MonoBehaviour
                 if(newNeighborGcost < neighbor.Gcost || !openNodes.Contains(neighbor))
                 {
                     neighbor.Gcost = newNeighborGcost;
-                    neighbor.go = GameObject.Find(neighbor.NodeGridPos.ToString());
-                    neighbor.lable = nodeObject.
-                    neighbor.lable.text = neighbor.Gcost.ToString();
+                    Debug.Log(neighbor.Gcost);
                     neighbor.Hcost = CalculateNodeCost(neighbor.NodeGridPos, endNode);
+                    Debug.Log(neighbor.Hcost);
                     neighbor.Parent = currentNode;
 
                     if(!openNodes.Contains(neighbor))
