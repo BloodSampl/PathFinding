@@ -86,28 +86,31 @@ public class PathFindingCalculations : MonoBehaviour
         return lowestFcostNode;
     }
 
-    
-    
+
+
     List<Node> GetNeighbors(Node current)
     {
         List<Node> neighborNodes = new List<Node>();
 
-        if(current.NodeGridPos.x < grid.width-1)
+        Vector2Int currentPosition = current.NodeGridPos;
+
+        if (currentPosition.x < grid.width - 1)
         {
-            neighborNodes.Add(grid.GetNode(startingNode + new Vector2Int(1, 0)));
+            neighborNodes.Add(grid.GetNode(currentPosition + new Vector2Int(1, 0)));
         }
-        if(current.NodeGridPos.x > 0)
+        if (currentPosition.x > 0)
         {
-            neighborNodes.Add(grid.GetNode(startingNode + new Vector2Int(-1, 0)));
+            neighborNodes.Add(grid.GetNode(currentPosition + new Vector2Int(-1, 0)));
         }
-        if (current.NodeGridPos.y < grid.height-1)
+        if (currentPosition.y < grid.height - 1)
         {
-            neighborNodes.Add(grid.GetNode(startingNode + new Vector2Int(0, 1)));
+            neighborNodes.Add(grid.GetNode(currentPosition + new Vector2Int(0, 1)));
         }
-        if (current.NodeGridPos.y > 0)
+        if (currentPosition.y > 0)
         {
-            neighborNodes.Add(grid.GetNode(startingNode + new Vector2Int(0, -1)));
+            neighborNodes.Add(grid.GetNode(currentPosition + new Vector2Int(0, -1)));
         }
+
         return neighborNodes;
     }
 
