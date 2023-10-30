@@ -14,6 +14,11 @@ public class PathFindingCalculations : MonoBehaviour
     List<Node> openNodes = new List<Node>();
     List<Node> closedNodes = new List<Node>();
 
+    public string gCostLabelName = "Gcost"; 
+    public string hCostLabelName = "Hcost";
+    public string fCostLabelName = "Fcost";
+    public string labelsParentName = "Canvas";
+
     private void Awake()
     {
         grid = GetComponent<PathFindingGrid>();
@@ -56,9 +61,9 @@ public class PathFindingCalculations : MonoBehaviour
                 if(newNeighborGcost < neighbor.Gcost || !openNodes.Contains(neighbor))
                 {
                     neighbor.Gcost = newNeighborGcost;
-                    Debug.Log(neighbor.Gcost);
+                    //Debug.Log(neighbor.Gcost);
                     neighbor.Hcost = CalculateNodeCost(neighbor.NodeGridPos, endNode);
-                    Debug.Log(neighbor.Hcost);
+                    //Debug.Log(neighbor.Hcost);
                     neighbor.Parent = currentNode;
 
                     if(!openNodes.Contains(neighbor))
@@ -124,9 +129,10 @@ public class PathFindingCalculations : MonoBehaviour
         foreach (Node node in openNodes)
         {
             GameObject nodeObject = GameObject.Find(node.NodeGridPos.ToString());
-            Debug.Log(node.NodeGridPos);
+            //Debug.Log(node.NodeGridPos);
             Renderer nodeRenderer = nodeObject.GetComponentInChildren<Renderer>();
             nodeRenderer.material.color = color;
+
         }
     }
 
